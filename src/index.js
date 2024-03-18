@@ -54,9 +54,12 @@ app.get("/", (_req, res) => {
   res.send("Welcome API");
 });
 
+
+
 app.use("/auth", authRouter);
 app.use("/api", sanitizeBody, userRouter )
 app.use("/api/employee", sanitizeBody, employeeRouter  )
+
 
 
 mongoose

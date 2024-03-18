@@ -10,6 +10,7 @@ const authRouter = Router();
 
 // this redirects to google
 authRouter.get("/google", (req, res, next) => {
+  console.log("get google")
   // get the redirect_url from the query params
   // expecting the url to look like /auth/google?redirect_url=http://localhost:3000/
   const { redirect_url } = req.query;
