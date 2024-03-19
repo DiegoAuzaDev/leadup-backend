@@ -9,7 +9,6 @@ const MongoStore = require("connect-mongo");
 const session = require("express-session");
 const passport = require("passport");
 const helmet = require("helmet");
-const { errorHandler } = require("./utils/errors");
 const logMiddleware = require("./middleware/logMiddleware.js");
 const authRouter = require("./routes/authRouter.js")
 const mongoose = require("mongoose");

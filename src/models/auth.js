@@ -15,11 +15,9 @@ const authSchema = new Schema(
     googleId: {
       type: String,
       unique: true,
-      required: true,
     },
     photo : { 
       type : String, 
-      required : true
     }
   },
   {

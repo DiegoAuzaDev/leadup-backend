@@ -25,6 +25,9 @@ const create = async (employeeData) => {
   await newEmployee.save();
   return newEmployee;
 };
+
+
+
 const replace = async (companyId, employeeId, dataToReplace) => {
   if(!companyId || !employeeId){
     throw new BadRequestError("Missing parameter to find employee")
