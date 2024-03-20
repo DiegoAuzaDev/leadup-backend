@@ -24,7 +24,7 @@ app.use(helmet());
 app.use(sanitizeMongo());
 app.use(
   cors({
-    origin: process.env.CORS_WHITELIST.split(","),
+    origin: "*",
   })
 );
 app.use(express.json());

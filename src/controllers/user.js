@@ -5,8 +5,10 @@ const mapUtils = require("../utils/googleMaps.js");
 const getAll = async (req, res, next) => {
   try {
     const { _id: ownerId } = req.user;
+    let user = req.user;
     const company = await CompanyServices.getAll(ownerId);
-    res.json(company);
+    
+    res.json({company , user});
   } catch (err) {
     next(err);
   }
