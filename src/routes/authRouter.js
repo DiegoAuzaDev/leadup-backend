@@ -25,8 +25,6 @@ authRouter.get("/google", (req, res, next) => {
   return authenticator(req, res, next);
 });
 
-
-
 // google sends response to this
 authRouter.get(
   "/google/callback",
@@ -46,10 +44,19 @@ authRouter.get(
   }
 );
 
+
+authRouter.get("/local", (req, res)=>{
+  console.log("use Local passport")
+    const { redirect_url } = req.query;
+    const authenticator = passport.authenticate("local")
+});
+
 authRouter.get("/logout", (req, res) => {
   req.logout({}, () => {
     res.redirect("/");
   });
 });
+
+
 
 module.exports = authRouter;

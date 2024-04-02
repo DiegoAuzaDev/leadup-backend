@@ -3,6 +3,7 @@ require("dotenv").config();
 
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
 
 const User = require("../models/auth");
 
@@ -40,6 +41,10 @@ passport.use(
     }
   )
 );
+
+// passport local 
+
+
 
 passport.serializeUser((user, done) => {
   done(null, user._id);
