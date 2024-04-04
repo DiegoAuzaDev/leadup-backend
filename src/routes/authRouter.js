@@ -49,6 +49,8 @@ authRouter.get("/local", (req, res)=>{
   console.log("use Local passport")
     const { redirect_url } = req.query;
     const authenticator = passport.authenticate("local")
+
+    return authenticator(req, res, next)
 });
 
 authRouter.get("/logout", (req, res) => {
