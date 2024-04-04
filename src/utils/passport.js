@@ -15,17 +15,18 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     async function (_accessToken, _refreshToken, profile, cb) {
+      console.log(profile)
       try {
         const user = await User.findOneAndUpdate(
           {
-            googleId: profile.id,
+            "google.id": profile.id,
           },
           {
             $set: {
-              name: profile.displayName,
-              googleId: profile.id,
-              email: profile._json.email,
-              photo: profile._json.picture,
+              "google.name": profile.displayName,
+             "google.id": profile.id,
+              "google.email": profile._json.email,
+             "google.photo": profile._json.picture,
             },
           },
           {
