@@ -53,7 +53,6 @@ passport.use(
       try {
         const user = await User.findOne({ "local.email": email });
         if (user) {
-          console.log("user found")
           throw new UnauthorizedError("That email is already taken");
         } 
           const savedUser = await User.create({

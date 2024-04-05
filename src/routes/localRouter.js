@@ -27,21 +27,17 @@ localRouter.post("/signup", (req, res, next) => {
   }
   const authenticator = passport.authenticate(
     "local-signup",
-    (err, user, info) => {
-      console.log("helllooo")
+    (err, user) => {
       if (err) {
         return next(err);
       }
       if (!user) {
-        // Handle authentication failure
         return res.status(401).json({ message: "Authentication failed" });
       }
-      // Authentication successful
       req.login(user, (err) => {
         if (err) {
           return next(err);
         }
-        // Redirect or send response
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
         res.redirect(`${redirect_url}?token=${token}`);
       });
