@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt-nodejs")
 
 const authSchema = new Schema({
   local: {
+    id: Schema.Types.UUID,
     name: String,
     email: String,
     password: String,
