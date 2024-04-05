@@ -11,7 +11,6 @@ const passport = require("passport");
 const helmet = require("helmet");
 const logMiddleware = require("./middleware/logMiddleware.js");
 const authRouter = require("./routes/authRouter.js")
-const localRouter = require("./routes/localRouter.js")
 const mongoose = require("mongoose");
 const userRouter = require("./routes/userRoutes.js");
 const employeeRouter = require("./routes/employeeRouter.js")
@@ -57,7 +56,6 @@ app.get("/", (_req, res) => {
 
 
 app.use("/auth", authRouter);
-app.use("/auth/local", localRouter);
 app.use("/api", sanitizeBody, userRouter )
 app.use("/api/employee", sanitizeBody, employeeRouter  )
 

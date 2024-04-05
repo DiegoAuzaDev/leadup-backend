@@ -24,8 +24,6 @@ authRouter.get("/google", (req, res, next) => {
   return authenticator(req, res, next);
 });
 
-
-
 // google sends response to this
 authRouter.get(
   "/google/callback",
@@ -44,6 +42,44 @@ authRouter.get(
     res.redirect(`${redirectUrl}?token=${token}`);
   }
 );
+
+
+authRouter.get("/login", (req, res, next) => {
+  console.log(req);
+});
+
+authRouter.post("/signup", (req, res, next) => {
+  const { name, email, password, photo } = req.body;
+  const { redirect_url } = req.query;
+
+  req.user = {
+    name,
+    email,
+    password,
+    photo,
+  };
+  if (!name || !email || !password) {
+    return next("Missing params");
+  }
+  const authenticator = passport.authenticate("local-signup", (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(401).json({ message: "Authentication failed" });
+    }
+    req.login(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+      res.redirect(`${redirect_url}?token=${token}`);
+    });
+  });
+
+  return authenticator(req, res, next);
+});
+
 
 authRouter.get("/logout", (req, res) => {
   req.logout({}, () => {
