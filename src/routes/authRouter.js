@@ -14,7 +14,6 @@ authRouter.get("/google", (req, res, next) => {
   // get the redirect_url from the query params
   // expecting the url to look like /auth/google?redirect_url=http://localhost:3000/
   const { redirect_url } = req.query;
-
   // add it to the google state
   const authenticator = passport.authenticate("google", {
     scope: ["profile", "email"],

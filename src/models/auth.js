@@ -1,5 +1,6 @@
 const { model, Schema } = require("mongoose");
 const { userKey } = require("../utils/keys");
+const bcrypt = require("bcrypt-nodejs")
 
 const authSchema = new Schema({
   local: {
@@ -27,6 +28,14 @@ const authSchema = new Schema({
     photo: String,
   },
 });
+
+authSchema.methods.generateHash = function (password) {
+  return bcrypt.hashSync(password, bcrypt.genSalt(8), null);
+};
+
+ authSchema.methods.validPassword = function (password) {
+   return bcrypt.compareSync(password, this.local.password);
+ };
 
 authSchema.set("toObject", {
   transform: (_doc, ret) => {

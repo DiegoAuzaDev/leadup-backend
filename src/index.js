@@ -57,7 +57,7 @@ app.get("/", (_req, res) => {
 
 
 app.use("/auth", authRouter);
-app.use("/auth/local", localRouter );
+app.use("/auth/local", localRouter);
 app.use("/api", sanitizeBody, userRouter )
 app.use("/api/employee", sanitizeBody, employeeRouter  )
 
