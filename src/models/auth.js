@@ -4,11 +4,10 @@ const bcrypt = require("bcrypt-nodejs")
 
 const authSchema = new Schema({
   local: {
-    id: Schema.Types.UUID,
     name: String,
     email: String,
     password: String,
-    photo: String,
+    photo: { type: String, default: "" },
   },
   facebook: {
     id: String,
@@ -30,13 +29,6 @@ const authSchema = new Schema({
   },
 });
 
-authSchema.methods.generateHash = function (password) {
-  return bcrypt.hashSync(password, bcrypt.genSalt(8), null);
-};
-
- authSchema.methods.validPassword = function (password) {
-   return bcrypt.compareSync(password, this.local.password);
- };
 
 authSchema.set("toObject", {
   transform: (_doc, ret) => {

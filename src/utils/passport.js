@@ -6,6 +6,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/auth");
 const { UnauthorizedError } = require("./errors");
+const { generateHash } = require("./passwordValidation");
 
 passport.use(
   new GoogleStrategy(
@@ -58,9 +59,9 @@ passport.use(
           const savedUser = await User.create({
             "local.name": req.user.name,
             "local.email": email,
-            "local.password": password,
-            "local.photo" : req.user.photo
+            "local.password": generateHash(password),
           });
+          console.log(savedUser)
           cb(null, savedUser)
       } catch (err) {
         cb( err)
