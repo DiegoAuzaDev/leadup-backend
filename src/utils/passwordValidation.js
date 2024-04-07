@@ -6,17 +6,17 @@ function generateHash(password) {
   return new Promise((resolve, reject) => {
     bcrypt.hash(password, saltRounds, function (err, hash) {
       if (err) {
-        reject(err); 
+        reject(err);
       } else {
-        resolve(hash); 
+        resolve(hash);
       }
     });
   });
 }
 
-function validPassword(myPlaintextPassword, hash) {
+function validPassword(password, hash) {
   return new Promise((resolve, reject) => {
-    bcrypt.compare(myPlaintextPassword, hash, function (err, result) {
+    bcrypt.compare(password, hash, function (err, result) {
       if (err) {
         reject(err); // If there's an error, reject the promise with the error
       } else {
