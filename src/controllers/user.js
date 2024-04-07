@@ -7,7 +7,6 @@ const getAll = async (req, res, next) => {
     const { _id: ownerId } = req.user;
     let user = req.user;
     const company = await CompanyServices.getAll(ownerId);
-    
     res.json({company , user});
   } catch (err) {
     next(err);

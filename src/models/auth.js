@@ -7,18 +7,6 @@ const authSchema = new Schema({
     name: String,
     email: String,
     password: String,
-    photo: { type: String, default: "" },
-  },
-  facebook: {
-    id: String,
-    name: String,
-    email: String,
-    photo: String,
-  },
-  twitter: {
-    id: String,
-    displayName: String,
-    username: String,
     photo: String,
   },
   google: {
