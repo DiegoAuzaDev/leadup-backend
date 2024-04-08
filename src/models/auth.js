@@ -1,6 +1,5 @@
 const { model, Schema } = require("mongoose");
 const { userKey } = require("../utils/keys");
-const bcrypt = require("bcrypt-nodejs")
 
 const authSchema = new Schema({
   local: {
