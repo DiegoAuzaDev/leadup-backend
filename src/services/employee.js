@@ -1,14 +1,17 @@
 "use strict";
 
+// Importing Employee model, Mongoose Types, and error classes
 const Employee = require("../models/employee.js");
 const { Types } = require("mongoose");
 const { NotFoundError, BadRequestError } = require("../utils/errors");
 
+// Function to retrieve all employees belonging to a specific company
 const getAll = async (companyId) => {
   const employee = await Employee.find({ companyId: { $eq: companyId } });
   return employee;
 };
 
+// Function to retrieve a single employee by company ID and employee ID
 const getOne = async (companyId, employeeId) => {
   const foundEmployee = await Employee.findOne({
     _id: employeeId,
@@ -20,12 +23,14 @@ const getOne = async (companyId, employeeId) => {
   return foundEmployee;
 };
 
+// Function to create a new employee
 const create = async (employeeData) => {
   const newEmployee = new Employee(employeeData);
   await newEmployee.save();
   return newEmployee;
 };
 
+// Function to replace employee data with new data
 const replace = async (companyId, employeeId, dataToReplace) => {
   if (!companyId || !employeeId) {
     throw new BadRequestError("Missing parameter to find employee");
@@ -54,6 +59,8 @@ const replace = async (companyId, employeeId, dataToReplace) => {
   }
   return replacedEmployee;
 };
+
+// Function to update employee email
 const update = async (companyId, employeeId, dataToUpdate) => {
   if (!companyId || !employeeId) {
     throw new BadRequestError("Missing parameters to find employee");
@@ -79,6 +86,7 @@ const update = async (companyId, employeeId, dataToUpdate) => {
   return updatedEmployee;
 };
 
+// Function to delete an employee by company ID and employee ID
 const deleteOne = async (companyId, employeeId) => {
   const deletedEmployee = await Employee.findOneAndDelete({
     _id: employeeId,
@@ -90,6 +98,7 @@ const deleteOne = async (companyId, employeeId) => {
   return deletedEmployee;
 };
 
+// Exporting functions for external use
 module.exports = {
   getAll,
   getOne,
