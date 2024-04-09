@@ -14,8 +14,8 @@ const getOne = async (companyId, employeeId) => {
     _id: employeeId,
     companyId: { $eq: companyId },
   });
-  if(foundEmployee == null){
-    throw new NotFoundError("Employee with "+ employeeId +  " not found")
+  if (foundEmployee == null) {
+    throw new NotFoundError("Employee with " + employeeId + " not found");
   }
   return foundEmployee;
 };
@@ -26,11 +26,9 @@ const create = async (employeeData) => {
   return newEmployee;
 };
 
-
-
 const replace = async (companyId, employeeId, dataToReplace) => {
-  if(!companyId || !employeeId){
-    throw new BadRequestError("Missing parameter to find employee")
+  if (!companyId || !employeeId) {
+    throw new BadRequestError("Missing parameter to find employee");
   }
   if (
     !dataToReplace.name ||
@@ -46,44 +44,45 @@ const replace = async (companyId, employeeId, dataToReplace) => {
     },
     {
       ...dataToReplace,
-    }, { 
-      returnOriginal : false
+    },
+    {
+      returnOriginal: false,
     }
   );
-   if (replacedEmployee == null) {
-     throw new NotFoundError("Employee with id " + employeeId + " not found");
-   }
-  return replacedEmployee
-};
-const update = async (companyId, employeeId, dateToUpdate) => {
-  if (!companyId || !employeeId) {
-    throw new BadRequestError("Missing parameter to find employee");
+  if (replacedEmployee == null) {
+    throw new NotFoundError("Employee with id " + employeeId + " not found");
   }
-   if (!dateToUpdate.email) {
-     throw new BadRequestError("Missing parameter to update employee");
-   }
-   const updatedEmployee = await Employee.findOneAndUpdate(
-     {
-       _id: employeeId,
-       companyId: { $eq: companyId },
-     },
-     {
-       email: dateToUpdate.email,
-     },
-     {
-       returnOriginal: false,
-     }
-   );
-   if (updatedEmployee == null) {
-     throw new NotFoundError("Employee with id " + employeeId + " not found");
-   }
-   return updatedEmployee;
+  return replacedEmployee;
+};
+const update = async (companyId, employeeId, dataToUpdate) => {
+  if (!companyId || !employeeId) {
+    throw new BadRequestError("Missing parameters to find employee");
+  }
+  if (!dataToUpdate.email) {
+    throw new BadRequestError("Missing parameter to update employee");
+  }
+  const updatedEmployee = await Employee.findOneAndUpdate(
+    {
+      _id: employeeId,
+      companyId: companyId,
+    },
+    {
+      email: dataToUpdate.email,
+    },
+    {
+      returnOriginal: false,
+    }
+  );
+  if (updatedEmployee == null) {
+    throw new NotFoundError("Employee with id " + employeeId + " not found");
+  }
+  return updatedEmployee;
 };
 
 const deleteOne = async (companyId, employeeId) => {
-  const deletedEmployee = await Employee.findByIdAndDelete({
+  const deletedEmployee = await Employee.findOneAndDelete({
     _id: employeeId,
-    companyId: { $eq: companyId },
+    companyId: companyId,
   });
   if (deletedEmployee == null) {
     throw new NotFoundError("Employee with id " + employeeId + " not found");

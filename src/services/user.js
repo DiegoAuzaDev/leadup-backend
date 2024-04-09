@@ -26,7 +26,7 @@ const replace = async (id, companyData) => {
   if (!companyData.country || !companyData.address || !companyData.name) {
     throw new BadRequestError("Name, address and country are required");
   }
-  const formatedUserLocationData = await locationUserFormating(companyData);
+  const formatedUserLocationData = await locationUserFormatting(companyData);
   const replaceCompany = await Company.findByIdAndUpdate(
     id,
     {
@@ -47,7 +47,7 @@ const update = async (id, updatedFields) => {
     throw new BadRequestError("Nothing to update");
   }
   if (updatedFields.address && updatedFields.country) {
-    updatedFields = await locationUserFormating(updatedFields);
+    updatedFields = await locationUserFormatting(updatedFields);
   }
   const updatedCompany = await Company.findByIdAndUpdate(
     id,
@@ -81,7 +81,7 @@ module.exports = {
   update,
 };
 
-const locationUserFormating = async (companyData) => {
+const locationUserFormatting = async (companyData) => {
   const formatedLocationData = companyData;
   const updatedLocation = await googleMapValidation(
     companyData.address,
