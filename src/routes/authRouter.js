@@ -1,107 +1,126 @@
 "use strict";
+
+// TODO 
+// ! Check how to get rid of duplicated sessions token
+
+// Import required modules and middleware
 require("dotenv").config();
 const { Router } = require("express");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const { BadRequestError } = require("../utils/errors");
 
+// Initialize passport strategies
 require("../utils/passport");
 
+// Create router instance
 const authRouter = Router();
 
-// this redirects to google
+// Route to initiate Google OAuth2 authentication
 authRouter.get("/google", (req, res, next) => {
-  // get the redirect_url from the query params
-  // expecting the url to look like /auth/google?redirect_url=http://localhost:3000/
+  // Extract redirect URL from query parameters
   const { redirect_url } = req.query;
-  // add it to the google state
+  // Configure Google authentication
   const authenticator = passport.authenticate("google", {
     scope: ["profile", "email"],
     state: redirect_url,
   });
-
-  // redirect to google.
+  // Redirect to Google for authentication
   return authenticator(req, res, next);
 });
 
-// google sends response to this
-authRouter.get("/google/callback",
+// Callback route for Google OAuth2 authentication
+authRouter.get(
+  "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
-    // get the state from the query params
+    // Extract state from query parameters
     const { state } = req.query;
-    // define the redirectUrl with a fallback if undefined
+    // Define redirect URL with fallback if undefined
     const redirectUrl = state ?? "/api/";
-
-    // generate the token and get user id
+    // Generate JWT token with user ID
     const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET);
-    console.log("Token     " + token);
-
-    // redirect with the token
+    // Redirect with token appended to the URL
     res.redirect(`${redirectUrl}?token=${token}`);
   }
 );
 
-
+// Route to handle user login
 authRouter.post("/login", (req, res, next) => {
+  // Extract email, password, and redirect URL from request body and query parameters
   const { email, password } = req.body;
-  const { redirect_url } = req.query;
+  const { redirect_url } = req.query ?? "/api/";
+  // Store user credentials in request object
   req.user = {
     email,
     password,
   };
+  // Validate presence of email and password
   if (!email || !password) {
     return next(new BadRequestError("Missing params"));
   }
+  // Authenticate user with local login strategy
   const authenticator = passport.authenticate("local-login", (err, user) => {
     if (err) {
       return next(err);
     }
+    // Log user in and generate JWT token
     req.login(user, (err) => {
       if (err) {
         return next(err);
       }
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+      // Redirect with token appended to the URL
       res.redirect(`${redirect_url}?token=${token}`);
     });
   });
-   return authenticator(req, res, next);
+  return authenticator(req, res, next);
 });
-authRouter.post("/signup", (req, res, next) => {
-  const { name, email, password } = req.body;
-  const { redirect_url } = req.query;
 
+// Route to handle user signup
+authRouter.post("/signup", (req, res, next) => {
+  // Extract name, email, password, and redirect URL from request body and query parameters
+  const { name, email, password } = req.body;
+  const { redirect_url } = req.query ?? "/api/";
+  // Store user information in request object
   req.user = {
     name,
     email,
     password,
   };
+  // Validate presence of name, email, and password
   if (!name || !email || !password) {
     return next(new BadRequestError("Missing params"));
   }
+  // Authenticate user with local signup strategy
   const authenticator = passport.authenticate("local-signup", (err, user) => {
     if (err) {
       return next(err);
     }
+    // Check if user is authenticated
     if (!user) {
       return res.status(401).json({ message: "Authentication failed" });
     }
+    // Log user in and generate JWT token
     req.login(user, (err) => {
       if (err) {
         return next(err);
       }
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+      // Redirect with token appended to the URL
       res.redirect(`${redirect_url}?token=${token}`);
     });
   });
-
   return authenticator(req, res, next);
 });
 
+// Route to handle user logout
 authRouter.get("/logout", (req, res) => {
+  // Logout user and redirect to homepage
   req.logout({}, () => {
     res.redirect("/");
   });
 });
 
+// Export the authentication router
 module.exports = authRouter;
