@@ -105,11 +105,12 @@ passport.use(
         if (user) {
           throw new UnauthorizedError("That email is already taken");
         }
-
+        console.log(req.photo)
         // Create new user with hashed password
         const savedUser = await User.create({
           "local.name": req.user.name,
           "local.email": email,
+          "local.photo": req.body.photo,
           "local.password": await generateHash(password),
         });
         cb(null, savedUser);
