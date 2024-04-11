@@ -15,6 +15,7 @@ const session = require("express-session");
 const sanitizeBody = require("./middleware/sanitizeBody.js");
 const sanitizeMongo = require("express-mongo-sanitize");
 const authRouter = require("./routes/authRouter.js");
+const imagesRouter = require("./routes/imagesRouter.js")
 const employeeRouter = require("./routes/employeeRouter.js");
 const userRouter = require("./routes/userRoutes.js");
 
@@ -63,8 +64,12 @@ app.use("/auth", authRouter);
 // Route handlers for user-related endpoints
 app.use("/api", sanitizeBody, userRouter);
 
+app.use("api/images", sanitizeBody, imagesRouter);
+
+
 // Route handlers for employee-related endpoints
 app.use("/api/employee", sanitizeBody, employeeRouter);
+
 
 // Connecting to MongoDB
 mongoose
