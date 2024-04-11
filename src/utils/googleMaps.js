@@ -11,7 +11,6 @@ const googleUrlValidateingAddress = `https://addressvalidation.googleapis.com/v1
 
 // Function to validate address using Google Maps API
 const googleMapValidation = async (address, region) => {
-  console.log(address, region)
   let addressData = null;
   try {
     // Send POST request to Google Maps API for address validation
@@ -35,7 +34,6 @@ const googleMapValidation = async (address, region) => {
     }
   } catch (error) {
     // Log error and throw BadRequestError with custom message
-    console.error("Error occurred:", error.message);
     throw new BadRequestError("Google Map error " + error.message);
   }
 };
