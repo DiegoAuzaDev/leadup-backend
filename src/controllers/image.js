@@ -8,7 +8,7 @@ const getAll = async (req, res, next) => {
     const imageUrl = `http://localhost:3004/file/${req.file.filename}`;
     return res.send(imageUrl);
   } catch (error) {
-    next(err);
+    next(error);
   }
 };
 

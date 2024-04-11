@@ -18,10 +18,21 @@ const authRouter = require("./routes/authRouter.js");
 const imagesRouter = require("./routes/imagesRouter.js")
 const employeeRouter = require("./routes/employeeRouter.js");
 const userRouter = require("./routes/userRoutes.js");
+const Grid = require("gridfs-stream")
 
 
 // Creating Express app
 const app = express();
+
+let gfs; 
+
+
+const conn = mongoose.connection;
+conn.once("open", function () {
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("photos");
+});
+
 
 // Middleware setup
 app.use(compression()); // Compression middleware for responses
@@ -64,22 +75,35 @@ app.use("/auth", authRouter);
 // Route handlers for user-related endpoints
 app.use("/api", sanitizeBody, userRouter);
 
-app.use("api/images", sanitizeBody, imagesRouter);
+app.use("/api/images", sanitizeBody, imagesRouter);
 
+//
+app.get("api/images/file/:filename", async (req, res) => {
+  try {
+    const file = await gfs.files.findOne({ filename: req.params.filename });
+    const readStream = gfs.createReadStream(file.filename);
+    readStream.pipe(res);
+  } catch (error) {
+    res.send("not found");
+  }
+});
+
+app.delete("api/images/file/:filename", async (req, res) => {
+  try {
+    await gfs.files.deleteOne({ filename: req.params.filename });
+    res.send("success");
+  } catch (error) {
+    console.log(error);
+    res.send("An error occured.");
+  }
+});
+
+//
 
 // Route handlers for employee-related endpoints
 app.use("/api/employee", sanitizeBody, employeeRouter);
 
 
-// Connecting to MongoDB
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.log("Error connecting to MongoDB", err);
-  });
 
 // Starting the server
 const PORT = process.env.PORT || 3000;
