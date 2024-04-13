@@ -34,7 +34,6 @@ const companySchema = new Schema(
     phoneNumber: {
       type: Array,
       of: Number,
-      default: [],
     },
     numberExtension: {
       type: Number,
