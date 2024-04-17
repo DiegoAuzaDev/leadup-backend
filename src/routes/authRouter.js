@@ -1,6 +1,6 @@
 "use strict";
 
-// TODO 
+// TODO
 // ! Check how to get rid of duplicated sessions token
 
 // Import required modules and middleware
@@ -32,7 +32,7 @@ authRouter.get("/google", (req, res, next) => {
 // Callback route for Google OAuth2 authentication
 authRouter.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
+  passport.authenticate("google", { failWithError: "/api" }),
   (req, res) => {
     // Extract state from query parameters
     const { state } = req.query;
@@ -40,41 +40,45 @@ authRouter.get(
     const redirectUrl = state ?? "/api/";
     // Generate JWT token with user ID
     const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET);
+    if (!token) {
+      res.redirect(`${redirectUrl}?error=email%is%already%taken`);
+    } 
     // Redirect with token appended to the URL
-    res.redirect(`${redirectUrl}?token=${token}`);
+   if(token){
+     res.redirect(`${redirectUrl}?token=${token}`);
+   }
   }
 );
 
 // Route to handle user login
 authRouter.post("/login", (req, res, next) => {
-  // Extract email, password, and redirect URL from request body and query parameters
   const { email, password } = req.body;
   const { redirect_url } = req.query ?? "/api/";
-  // Store user credentials in request object
-  req.user = {
-    email,
-    password,
-  };
-  // Validate presence of email and password
+
   if (!email || !password) {
-    return next(new BadRequestError("Missing params"));
+    return res.status(400).json({ message: "Missing params" });
   }
-  // Authenticate user with local login strategy
-  const authenticator = passport.authenticate("local-login", (err, user) => {
+
+  passport.authenticate("local-login", (err, user) => {
     if (err) {
-      return next(err);
+      return next(err); // Forward any errors to the error handler
     }
-    // Log user in and generate JWT token
+    if (user == 404) {
+      // No user found
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (user == 401) {
+      // No user found
+      return res.status(401).json({ message: "Invalid Credentails" });
+    }
     req.login(user, (err) => {
       if (err) {
-        return next(err);
+        return next(err); // Forward any errors to the error handler
       }
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
-      // Redirect with token appended to the URL
       res.redirect(`${redirect_url}?token=${token}`);
     });
-  });
-  return authenticator(req, res, next);
+  })(req, res, next); // Invoke the middleware function returned by passport.authenticate
 });
 
 // Route to handle user signup

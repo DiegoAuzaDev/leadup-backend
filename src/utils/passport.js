@@ -66,24 +66,20 @@ passport.use(
     },
     async function (req, email, password, cb) {
       try {
-        // Find user by email
         const user = await User.findOne({ "local.email": email });
         if (!user) {
-          throw new Error("No user found");
+          return cb(null, 404); // Indicate user not found
         }
-
-        // Validate password
         let isPasswordValid = await validPassword(
           password,
           user.local.password
         );
         if (!isPasswordValid) {
-          throw new UnauthorizedError("Invalid password");
+          return cb(null, 401); // Indicate invalid password
         }
-
-        cb(null, user);
+        cb(null, user); // Authentication successful
       } catch (err) {
-        cb(err);
+        cb(err); // Forward any errors to the error handler
       }
     }
   )
