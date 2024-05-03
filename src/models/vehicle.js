@@ -22,16 +22,31 @@ const vehicleSchema = new Schema({
     type: Number,
     require: true,
   },
-  color : { 
-    type : String,
-    require : true,
+  color: {
+    type: String,
+    require: true,
   },
-  plateNumber : { 
-    type : String, 
-    require : true 
-  }
+  plateNumber: {
+    type: String,
+    require: true,
+  },
+  companyId: {
+    type: Types.ObjectId,
+    ref: `${companyKey}`,
+    require: true,
+  },
 });
 
+vehicleSchema.set("toObject", {
+  transform: (_doc, ret) => {
+    return {
+      ...ret,
+      id: ret._id.toString(),
+    };
+  },
+});
+
+module.exports = model(`${vehicleKey}`, vehicleSchema);
 
 // Mercedes - Benz;
 // Volvo;
