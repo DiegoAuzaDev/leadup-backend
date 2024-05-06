@@ -2,7 +2,6 @@
 
 // Importing Employee model, Mongoose Types, and error classes
 const Employee = require("../models/employee.js");
-const { Types } = require("mongoose");
 const { NotFoundError, BadRequestError } = require("../utils/errors");
 
 // Function to retrieve all employees belonging to a specific company

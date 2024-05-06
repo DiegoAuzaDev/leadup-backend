@@ -16,4 +16,4 @@ employeeRouter.put("/:companyId/:id", EmployeeController.replace);
 employeeRouter.patch("/:companyId/:id", EmployeeController.update);
 employeeRouter.delete("/:companyId/:id", EmployeeController.deleteOne);
 
-module.exports = employeeRouter
+module.exports = employeeRouter;

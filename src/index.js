@@ -17,6 +17,7 @@ const sanitizeMongo = require("express-mongo-sanitize");
 const authRouter = require("./routes/authRouter.js");
 const employeeRouter = require("./routes/employeeRouter.js");
 const userRouter = require("./routes/userRoutes.js");
+const vehicleRouter = require("./routes/vehicle.js");
 
 
 // Creating Express app
@@ -66,7 +67,7 @@ app.use("/api", sanitizeBody, userRouter);
 // Route handlers for employee-related endpoints
 app.use("/api/employee", sanitizeBody, employeeRouter);
 
-app.use("api/vehicle", sanitizeBody, )
+app.use("api/vehicle", sanitizeBody, vehicleRouter  )
 
 // Connecting to MongoDB
 mongoose

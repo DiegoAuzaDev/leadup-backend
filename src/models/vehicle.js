@@ -47,14 +47,3 @@ vehicleSchema.set("toObject", {
 });
 
 module.exports = model(`${vehicleKey}`, vehicleSchema);
-
-// Mercedes - Benz;
-// Volvo;
-// Scania;
-// MAN;
-// Iveco;
-// Ford;
-// Chevrolet;
-// Dodge;
-// Volkswagen;
-// Renault;
