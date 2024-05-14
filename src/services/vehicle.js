@@ -17,6 +17,10 @@ const getOne = async(companyId, vehicleId)=>{
       return foundVehicle;
 };
 
+const create = async(companyId, vehicle)=>{
+  
+};
+
 module.exports = {
     getAll,
     getOne,

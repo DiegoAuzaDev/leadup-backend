@@ -1,5 +1,4 @@
 const VehicleServices = require("../services/vehicle.js");
-const vehicleEnum = require("../utils/vehicle.js");
 const { BadRequestError, NotFoundError } = require("../utils/errors.js");
 
 const getAll = async (req, res, next) => {
