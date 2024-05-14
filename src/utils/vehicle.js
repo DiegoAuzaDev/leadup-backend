@@ -16,6 +16,8 @@ const vehicleSpecs = {
     minLength: 5, // meters
   },
   minYear: 1990,
+  maxCapacity: 40, // tons
+  minCapacity: 1, // ton
 };
 
 const vechicleFuelSource = {
