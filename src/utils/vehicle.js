@@ -8,6 +8,21 @@ const vehicleColors = {
   Yellow: "yellow",
 };
 
+const vehicleSpecs = {
+  maxDimensions: {
+    maxWidth: 2.6, // meters
+    maxLength: 12, // meters
+  },
+  minYear: 1990,
+};
+
+const vechicleFuelSource = {
+  Diesle : "diesel",
+  Gasoline : "gasoline",
+  Electric : "electric",
+  Hybrid : "hibrid"
+}
+
 const vehicleBrand = {
   Mercedes: "mercedes",
   Volvo: "volve",
@@ -22,5 +37,7 @@ const vehicleBrand = {
 
 module.exports = {
   vehicleColors,
-  vehicleBrand
+  vehicleBrand,
+  vehicleSpecs,
+  vechicleFuelSource,
 };

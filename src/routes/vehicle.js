@@ -10,5 +10,7 @@ const vehicleRouter = Router();
 vehicleRouter.use(isAuthnticated);
 
 vehicleRouter.get("/:companyId", VehicleController.getAll);
+vehicleRouter.get("/:companyId/:vehicleId", VehicleController.getOne);
+
 
 module.exports = vehicleRouter;
