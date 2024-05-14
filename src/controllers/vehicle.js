@@ -26,7 +26,7 @@ const getOne = async (req, res, next) => {
 const create = async (req, res, send) => {
   try {
     const companyId = req.params.companyId;
-    const { brand, model, year, width, length, color, plateNumber } =
+    const { brand, model, year, width, length, color, description, plateNumber } =
       req.sanitizedBody;
     if (!companyId) {
       throw new BadRequestError("Missing company id");
@@ -36,15 +36,10 @@ const create = async (req, res, send) => {
   }
 };
 
-function isValidColors(color) {
-  return Object.values(vehicleEnum.vehicleColors).includes(color.toLowerCase());
-}
 
-function isValidBrand(brand) {
-  return Object.values(vehicleEnum.vehicleBrand).includes(color.toLowerCase());
-}
 
 module.exports = {
   getAll,
   getOne,
+  create,
 };

@@ -1,10 +1,22 @@
+const vehicleBrand = {
+  Mercedes: "mercedes",
+  Volvo: "volve",
+  Scania: "scania",
+  Iveco: "iveco",
+  Ford: "ford",
+  Chevrolet: "chevrolet",
+  Dodge: "dodge",
+  Volkswagen: "volkswagen",
+  Renault: "renault",
+};
+
 const vehicleColors = {
   Black: "black",
   White: "white",
-  Gray : "gray",
+  Gray: "gray",
   Red: "red",
-  Orange : "orange",
-  Blue : "blue",
+  Orange: "orange",
+  Blue: "blue",
   Yellow: "yellow",
 };
 
@@ -21,22 +33,10 @@ const vehicleSpecs = {
 };
 
 const vechicleFuelSource = {
-  Diesle : "diesel",
-  Gasoline : "gasoline",
-  Electric : "electric",
-  Hybrid : "hibrid"
-}
-
-const vehicleBrand = {
-  Mercedes: "mercedes",
-  Volvo: "volve",
-  Scania: "scania",
-  Iveco: "iveco",
-  Ford: "ford",
-  Chevrolet: "chevrolet",
-  Dodge: "dodge",
-  Volkswagen: "volkswagen",
-  Renault: "renault",
+  Diesle: "diesel",
+  Gasoline: "gasoline",
+  Electric: "electric",
+  Hybrid: "hibrid",
 };
 
 module.exports = {

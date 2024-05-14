@@ -10,6 +10,10 @@ const vehicleSchema = new Schema({
     type: String,
     required: true,
   },
+  description : {
+    type : String,
+    require: false,
+  },
   year: {
     type: Number,
     require: true,
