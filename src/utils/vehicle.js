@@ -22,14 +22,20 @@ const vehicleColors = {
 
 const vehicleSpecs = {
   maxDimensions: {
-    maxWidth: 2.6, // meters
-    maxLength: 12, // meters
-    minWidth: 1.5, // meters
-    minLength: 5, // meters
+    width: {
+      maxWidth: 2.6, // meters
+      minWidth: 1.5, // meters
+    },
+    length: {
+      maxLength: 12, // meters
+      minLength: 5, // meters
+    },
+    capacity: {
+      maxCapacity: 40, // tons
+      minCapacity: 1, // ton
+    },
   },
   minYear: 1990,
-  maxCapacity: 40, // tons
-  minCapacity: 1, // ton
 };
 
 const vechicleFuelSource = {

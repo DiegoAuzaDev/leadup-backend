@@ -9,16 +9,11 @@ const isValidBrand = (brand)=>{
 }
 
 const isValidColor = (color)=>{
-    let isValid = -1;
-
-    return isValid
+    return Object.values(validVehicleFormat.vehicleColors).includes(toLowerCase(color));
 }
 
 const isValidFuelSource = (fuel)=>{
-
-    let isValid = -1;
-
-    return isValid
+    return Object.values(validVehicleFormat.vechicleFuelSource).includes(toLowerCase(fuel))
 };
 
 const isValidWidth = (width)=>{
@@ -28,5 +23,8 @@ const isValidWidth = (width)=>{
 }
 
 module.exports = {
-    isValidBrand
-}
+  isValidBrand,
+  isValidColor,
+  isValidFuelSource,
+  isValidWidth,
+};
