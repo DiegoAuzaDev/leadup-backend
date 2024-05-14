@@ -12,6 +12,8 @@ const vehicleSpecs = {
   maxDimensions: {
     maxWidth: 2.6, // meters
     maxLength: 12, // meters
+    minWidth: 1.5, // meters
+    minLength: 5, // meters
   },
   minYear: 1990,
 };
