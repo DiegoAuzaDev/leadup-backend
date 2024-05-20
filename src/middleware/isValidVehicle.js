@@ -49,10 +49,22 @@ const isValidLength = (length) => {
   return false;
 };
 
+const isValidCapacity = (capacity) => {
+  const { maxCapacity, minCapacity } =
+    validVehicleFormat.vehicleSpecs.maxDimensions.capacity;
+  let isLessThanMaxValue = capacity <= maxCapacity;
+  let isLargerThanMinValue = capacity >= minCapacity;
+  if (isNumber(capacity) && isLessThanMaxValue && isLargerThanMinValue) {
+    return true;
+  }
+  return false;
+};
+
 module.exports = {
   isValidBrand,
   isValidColor,
   isValidFuelSource,
   isValidWidth,
   isValidLength,
+  isValidCapacity,
 };
