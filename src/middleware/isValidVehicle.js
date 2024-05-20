@@ -60,6 +60,8 @@ const isValidCapacity = (capacity) => {
   return false;
 };
 
+
+
 module.exports = {
   isValidBrand,
   isValidColor,

@@ -128,3 +128,17 @@ test(`Testing vechicle validation for leght : 40 - TRUE`, () => {
 test(`Testing vechicle validation for leght : 25 - TRUE`, () => {
   expect(vehicleValidation.isValidLength(25)).toBe(false);
 });
+
+// invalid capacity 
+
+test(`Testing vechicle validation for capacity : "12E" - FALSE`, () => {
+  expect(vehicleValidation.isValidWidth("12E")).toBe(false);
+});
+
+test(`Testing vechicle validation for capacity : 0.99 - FALSE`, () => {
+  expect(vehicleValidation.isValidWidth(0.99)).toBe(false);
+});
+
+test(`Testing vechicle validation for capacity : 40.1 - FALSE`, () => {
+  expect(vehicleValidation.isValidWidth(40.1)).toBe(false);
+});
