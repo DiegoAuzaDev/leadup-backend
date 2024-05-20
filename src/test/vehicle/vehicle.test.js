@@ -67,3 +67,36 @@ test("Testing vechicle validation for fuel : gasoline - TRUE", () => {
 test("Testing vechicle validation for fuel : ElecTric - TRUE", () => {
   expect(vehicleValidation.isValidFuelSource("ElecTric")).toBe(true);
 });
+
+    // invalid width for vehicle
+
+test(`Testing vechicle validation for width : "2.6" - FALSE`, ()=>{
+  expect(vehicleValidation.isValidWidth("2.6")).toBe(false)
+});
+
+test(`Testing vechicle validation for width : 2.7 - FALSE`, () => {
+  expect(vehicleValidation.isValidWidth(2.7)).toBe(false);
+});
+
+
+test(`Testing vechicle validation for width : 1.4 - FALSE`, () => {
+  expect(vehicleValidation.isValidWidth(1.4)).toBe(false);
+});
+
+test(`Testing vechicle validation for width : 3 - FALSE`, () => {
+  expect(vehicleValidation.isValidWidth(3)).toBe(false);
+});
+
+    // valid width for vehicle
+
+test(`Testing vechicle validation for width : 1.5 - TRUE`, () => {
+  expect(vehicleValidation.isValidWidth(1.5)).toBe(true);
+});
+
+test(`Testing vechicle validation for width : 2.6 - TRUE`, () => {
+  expect(vehicleValidation.isValidWidth(2.6)).toBe(true);
+});
+
+test(`Testing vechicle validation for width : 1.99 - TRUE`, () => {
+  expect(vehicleValidation.isValidWidth(1.99)).toBe(true);
+});
