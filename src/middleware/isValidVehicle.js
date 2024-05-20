@@ -3,6 +3,9 @@ const validVehicleFormat = require("../utils/vehicle");
 const toLowerCase = (textoToTrasnform) => {
   return textoToTrasnform.toLowerCase();
 };
+const isNumber = (test) => {
+  return typeof test === "number" && !isNaN(test);
+};
 
 const isValidBrand = (brand) => {
   return Object.values(validVehicleFormat.vehicleBrand).includes(
@@ -25,10 +28,21 @@ const isValidFuelSource = (fuel) => {
 const isValidWidth = (width) => {
   const { maxWidth, minWidth } =
     validVehicleFormat.vehicleSpecs.maxDimensions.width;
-  let isNumber = typeof width === "number" && !isNaN(width);
   let isLessThanMaxValue = width <= maxWidth;
   let isLargerThanMinValue = width >= minWidth;
-  if (isNumber && isLessThanMaxValue && isLargerThanMinValue) {
+  if (isNumber(width) && isLessThanMaxValue && isLargerThanMinValue) {
+    return true;
+  }
+
+  return false;
+};
+
+const isValidLength = (length) => {
+  const { maxLenght, minLenght } =
+    validVehicleFormat.vehicleSpecs.maxDimensions.length;
+  let isLessThanMaxValue = length <= maxLenght;
+  let isLargerThanMinValue = length >= minLenght;
+  if (isNumber(length) && isLessThanMaxValue && isLargerThanMinValue) {
     return true;
   }
 
@@ -40,4 +54,5 @@ module.exports = {
   isValidColor,
   isValidFuelSource,
   isValidWidth,
+  isValidLength,
 };
