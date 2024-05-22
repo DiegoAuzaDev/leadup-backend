@@ -67,7 +67,7 @@ app.use("/api", sanitizeBody, userRouter);
 // Route handlers for employee-related endpoints
 app.use("/api/employee", sanitizeBody, employeeRouter);
 
-app.use("api/vehicle", sanitizeBody, vehicleRouter  )
+app.use("/api/vehicle", sanitizeBody, vehicleRouter  )
 
 // Connecting to MongoDB
 mongoose

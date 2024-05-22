@@ -118,41 +118,41 @@ test(`Testing vechicle validation for leght : 4.9 - FALSE`, () => {
 // valid legth for vehicle
 
 test(`Testing vechicle validation for leght : 5 - TRUE`, () => {
-  expect(vehicleValidation.isValidLength(5)).toBe(false);
+  expect(vehicleValidation.isValidLength(5)).toBe(true);
 });
 
-test(`Testing vechicle validation for leght : 40 - TRUE`, () => {
-  expect(vehicleValidation.isValidLength(40)).toBe(false);
+test(`Testing vechicle validation for leght : 10 - TRUE`, () => {
+  expect(vehicleValidation.isValidLength(10)).toBe(true);
 });
 
-test(`Testing vechicle validation for leght : 25 - TRUE`, () => {
-  expect(vehicleValidation.isValidLength(25)).toBe(false);
+test(`Testing vechicle validation for leght : 12 - TRUE`, () => {
+  expect(vehicleValidation.isValidLength(12)).toBe(true);
 });
 
 // invalid capacity 
 
 test(`Testing vechicle validation for capacity : "12E" - FALSE`, () => {
-  expect(vehicleValidation.isValidWidth("12E")).toBe(false);
+  expect(vehicleValidation.isValidCapacity("12E")).toBe(false);
 });
 
 test(`Testing vechicle validation for capacity : 0.99 - FALSE`, () => {
-  expect(vehicleValidation.isValidWidth(0.99)).toBe(false);
+  expect(vehicleValidation.isValidCapacity(0.99)).toBe(false);
 });
 
 test(`Testing vechicle validation for capacity : 40.1 - FALSE`, () => {
-  expect(vehicleValidation.isValidWidth(40.1)).toBe(false);
+  expect(vehicleValidation.isValidCapacity(40.1)).toBe(false);
 });
 
 // valid capacity 
 
-test(`Testing vechicle validation for capacity : "1" - TRUE`, () => {
-  expect(vehicleValidation.isValidWidth("1")).toBe(false);
+test(`Testing vechicle validation for capacity : 1 - TRUE`, () => {
+  expect(vehicleValidation.isValidCapacity(1)).toBe(true);
 });
 
 test(`Testing vechicle validation for capacity : 40 - TRUE`, () => {
-  expect(vehicleValidation.isValidWidth(40)).toBe(false);
+  expect(vehicleValidation.isValidCapacity(40)).toBe(true);
 });
 
 test(`Testing vechicle validation for capacity : 25 - TRUE`, () => {
-  expect(vehicleValidation.isValidWidth(25)).toBe(false);
+  expect(vehicleValidation.isValidCapacity(25)).toBe(true);
 });

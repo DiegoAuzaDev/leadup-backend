@@ -38,10 +38,10 @@ const isValidWidth = (width) => {
 };
 
 const isValidLength = (length) => {
-  const { maxLenght, minLenght } =
+  const { maxLength, minLength } =
     validVehicleFormat.vehicleSpecs.maxDimensions.length;
-  let isLessThanMaxValue = length <= maxLenght;
-  let isLargerThanMinValue = length >= minLenght;
+  let isLessThanMaxValue = length <= maxLength;
+  let isLargerThanMinValue = length >= minLength;
   if (isNumber(length) && isLessThanMaxValue && isLargerThanMinValue) {
     return true;
   }
