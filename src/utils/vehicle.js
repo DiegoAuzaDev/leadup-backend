@@ -8,6 +8,7 @@ const vehicleBrand = {
   Dodge: "dodge",
   Volkswagen: "volkswagen",
   Renault: "renault",
+  Toyota: "toyota",
 };
 
 const vehicleColors = {

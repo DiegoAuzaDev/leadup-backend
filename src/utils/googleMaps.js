@@ -1,4 +1,5 @@
 const axios = require("axios");
+require("dotenv").config();
 const { NotFoundError, BadRequestError } = require("./errors");
 
 // Retrieve Google API key from environment variables
@@ -11,6 +12,8 @@ const googleUrlValidateingAddress = `https://addressvalidation.googleapis.com/v1
 
 // Function to validate address using Google Maps API
 const googleMapValidation = async (address, region) => {
+  console.log(address, region)
+  console.log(GOOGLE_KEY);
   let addressData = null;
   try {
     // Send POST request to Google Maps API for address validation
