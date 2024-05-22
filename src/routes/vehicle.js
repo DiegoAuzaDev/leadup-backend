@@ -11,6 +11,7 @@ vehicleRouter.use(isAuthnticated);
 
 vehicleRouter.get("/:companyId", VehicleController.getAll);
 vehicleRouter.get("/:companyId/:vehicleId", VehicleController.getOne);
+vehicleRouter.post("/:companyId", VehicleController.create);
 
 
 module.exports = vehicleRouter;

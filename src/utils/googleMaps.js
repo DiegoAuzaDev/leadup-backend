@@ -1,4 +1,5 @@
 const axios = require("axios");
+require("dotenv").config();
 const { NotFoundError, BadRequestError } = require("./errors");
 
 // Retrieve Google API key from environment variables

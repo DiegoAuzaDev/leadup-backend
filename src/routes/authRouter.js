@@ -1,8 +1,5 @@
 "use strict";
 
-// TODO
-// ! Check how to get rid of duplicated sessions token
-
 // Import required modules and middleware
 require("dotenv").config();
 const { Router } = require("express");
