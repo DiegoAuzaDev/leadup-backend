@@ -1,10 +1,10 @@
-const addresValidation = require("../../utils/googleMaps");
+const addressValidation = require("../../utils/googleMaps");
 
-describe("Testing the addres validation function", () => {
+describe("Testing the address validation function", () => {
   it("Given a valid address and region", async () => {
     const testAddress = "Carrera 1H # 6 - 14, Neiva - Huila";
     const region = "CO";
-    const response = await addresValidation.googleMapValidation(
+    const response = await addressValidation.googleMapValidation(
       testAddress,
       region
     );
@@ -17,7 +17,7 @@ describe("Testing the addres validation function", () => {
     const invalidAddress = "#$#$34";
     const region = "!@#!@#!@";
     try {
-      const response = await addresValidation.googleMapValidation(
+      const response = await addressValidation.googleMapValidation(
         invalidAddress,
         region
       );

@@ -39,7 +39,6 @@ const create = async (req, res, next) => {
       plateNumber,
       capacity,
     } = req.sanitizedBody;
-    console.log(companyId)
     if (!companyId) {
       throw new BadRequestError("Missing company id");
     }
