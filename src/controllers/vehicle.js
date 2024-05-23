@@ -7,7 +7,7 @@ const getAll = async (req, res, next) => {
   try {
     const companyId = req.params.companyId;
     // check for env mode
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "start") {
       if (!companyId) {
         throw new BadRequestError("Missing company id");
       }
@@ -75,11 +75,27 @@ const create = async (req, res, next) => {
     }
 
     // check for env mode
-    if (process.env.NODE_ENV === "development") {
-      // Add your development-specific code here
-    } else if (process.env.NODE_ENV === "test") {
-      res.status(201).json(req.sanitizedBody);
-    }
+if (
+  process.env.NODE_ENV === "development" ||
+  process.env.NODE_ENV === "start"
+) {
+  const newVehicle = VehicleServices.create({
+    brand,
+    model,
+    year,
+    width,
+    length,
+    color,
+    description,
+    fuel,
+    plateNumber,
+    capacity,
+    companyId,
+  });
+  res.status(201).json(newVehicle);
+} else if (process.env.NODE_ENV === "test") {
+  res.status(201).json(req.sanitizedBody);
+}
   } catch (err) {
     next(err);
   }

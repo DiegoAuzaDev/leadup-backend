@@ -17,11 +17,14 @@ const getOne = async(companyId, vehicleId)=>{
       return foundVehicle;
 };
 
-const create = async(companyId, vehicle)=>{
-  
+const create = async(vehicle)=>{
+  const newVehicle = new Vehicle(vehicle);
+  await newVehicle.save()
+  return newVehicle;
 };
 
 module.exports = {
-    getAll,
-    getOne,
-}
+  getAll,
+  getOne,
+  create,
+};
