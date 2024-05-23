@@ -1,6 +1,6 @@
 // createController.test.js
-const { create } = require("../../controllers/vehicle"); // Adjust the path accordingly
-const { BadRequestError } = require("../../utils/errors"); // Adjust the path to your error handling
+const { create } = require("../../controllers/vehicle"); 
+const { BadRequestError } = require("../../utils/errors"); 
 
 // Mock isValidVehicle module
 jest.mock("../../middleware/isValidVehicle", () => ({
@@ -12,7 +12,7 @@ jest.mock("../../middleware/isValidVehicle", () => ({
   isValidCapacity: jest.fn(),
 }));
 
-const isValidVehicle = require("../../middleware/isValidVehicle"); // Adjust the path accordingly
+const isValidVehicle = require("../../middleware/isValidVehicle"); 
 
 describe("create function for vehicle", () => {
   let req, res, next;
@@ -61,7 +61,7 @@ describe("create function for vehicle", () => {
     );
   });
 
-  // Additional test cases for other validations can be added here similarly
+
 
   it("should return 201 with sanitized body if all validations pass", async () => {
     isValidVehicle.isValidBrand.mockReturnValue(true);
@@ -76,6 +76,4 @@ describe("create function for vehicle", () => {
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(req.sanitizedBody);
   });
-
-  // Add more tests as needed for other validation and error cases
 });
