@@ -101,8 +101,30 @@ if (
   }
 };
 
+const replace = async(req, res, next) =>{
+
+}
+
+const update = async (req, res, next) =>{
+
+}
+
+const deleteOne = async(req, res, next)=>{
+  const companyId = req.params.companyId;
+  const vehicleId = req.params.vehicleId;
+  try {
+    const deletedVehicle = await VehicleServices.deleteOne( companyId, vehicleId)
+    res.json(deletedVehicle)
+  } catch(err){
+    next(err)
+  }
+}
+
 module.exports = {
   getAll,
   getOne,
   create,
+  replace,
+  update,
+  deleteOne,
 };

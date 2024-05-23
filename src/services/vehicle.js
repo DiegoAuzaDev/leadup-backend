@@ -23,8 +23,20 @@ const create = async(vehicle)=>{
   return newVehicle;
 };
 
+const deleteOne = async(companyId, vehicleId)=>{
+  const deletedVehicle = await Vehicle.findOneAndDelete({
+    _id: vehicleId,
+    companyId: companyId,
+  });
+  if(deleteOne == null){
+        throw new NotFoundError("Vehicle with id " + vehicleId + " not found");
+  } 
+  return deletedVehicle;
+};
+
 module.exports = {
   getAll,
   getOne,
   create,
+  deleteOne,
 };

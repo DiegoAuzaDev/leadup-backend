@@ -34,6 +34,7 @@ const vehicleSchema = new Schema({
   plateNumber: {
     type: String,
     require: true,
+    unique: true,
   },
   companyId: {
     type: Types.ObjectId,
