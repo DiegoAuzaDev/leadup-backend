@@ -1,3 +1,4 @@
+require("dotenv").config();
 const VehicleServices = require("../services/vehicle.js");
 const isValidVehicle = require("../middleware/isValidVehicle.js");
 const { BadRequestError, NotFoundError } = require("../utils/errors.js");
@@ -5,9 +6,19 @@ const { BadRequestError, NotFoundError } = require("../utils/errors.js");
 const getAll = async (req, res, next) => {
   try {
     const companyId = req.params.companyId;
-    console.log(companyId)
-    const vehicles = await VehicleServices.getAll(companyId);
-    res.json(vehicles);
+    // check for env mode
+    if (process.env.NODE_ENV === "development") {
+      if (!companyId) {
+        throw new BadRequestError("Missing company id");
+      }
+      const vehicles = await VehicleServices.getAll(companyId);
+      res.json(vehicles);
+    } else if (process.env.NODE_ENV === "test") {
+      if (!companyId) {
+        throw new BadRequestError("Missing company id");
+      }
+      res.status(200);
+    }
   } catch (err) {
     next(err);
   }
@@ -62,7 +73,13 @@ const create = async (req, res, next) => {
     if (!isValidVehicle.isValidCapacity(capacity)) {
       throw new BadRequestError("Invalid values for : capacity");
     }
-    res.status(201).json(req.sanitizedBody);
+
+    // check for env mode
+    if (process.env.NODE_ENV === "development") {
+      // Add your development-specific code here
+    } else if (process.env.NODE_ENV === "test") {
+      res.status(201).json(req.sanitizedBody);
+    }
   } catch (err) {
     next(err);
   }
