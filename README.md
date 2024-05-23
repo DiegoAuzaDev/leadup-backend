@@ -34,10 +34,41 @@ Currently, the data is being saved in MongoDB. However, once version one is comp
 
 MongoDB is a NoSQL database that allows developers to work with data without adhering to a specific data structure. However, in this case, we need to create some data structures to keep all the data organized and make it easier to query data when needed.
 
+### Testing 
+
+Jest is a delighful JavaScript Testing Framwork with a focus on simplicity. 
+
+All the test are been save on `src/test/...`
+
+```
+const vehicleValidation = require("../../middleware/isValidVehicle");
+
+// testing vehicle brand
+
+// invalid value - typo
+test("Testing vechicle validation for brand : MERCSDESx - FALSE", () => {
+  expect(vehicleValidation.isValidBrand("MercDESx")).toBe(false);
+});
+
+test("Testing vechicle validation for brand : NewCarBrand - FALSE", () => {
+  expect(vehicleValidation.isValidBrand("NewCarBrand")).toBe(false);
+}); 
+
+// valid value 
+test("Testing vechicle validation for brand : MerceDes - TRUE", () => {
+  expect(vehicleValidation.isValidBrand("MerceDes")).toBe(true);
+});
+
+```
+
+[Learn all you need to know about Jest here!](https://jestjs.io/)
+
 #### Data models
 
 [Learn all you need to know about Moongose module schemas here!](https://mongoosejs.com/docs/guide.html)
 
+
+##### User module
 
 The first data module in our database is the user module. First, it's important to understand that each collection is identified with a specific key. To find all the collection keys, you should look under `src/utils/keys.js.` Keeping all the keys in the same file and exporting them throughout the project makes it easier to modify the key values across the project.
 
@@ -64,7 +95,10 @@ const authSchema = new Schema({
   },
 });
 
+
 ```
+
+##### Company module
 
 The second data module in our database is the `company` module. This module contains data such as name, address, location, country, phone number, number extension, task, owner ID, and so on. As you can see in the code above, the `location` key-value does not follow any standard notation. However, we have created a separate module to manage the company's location.
 
@@ -116,5 +150,66 @@ const companySchema = new Schema(
   { timestamps: true }
 );
 ```
+
+##### Vehicle module
+
+The third data module in our database is the `vehicle` module. This module expects data such as brand, models, description, year, width, length, color, and so on. Some of these keys are set as required to prevent `unnamed vehicles` across our database. Each vehicle is linked to a specific company by adding a key named `companyId`, which is of type `Types.ObjectId` and refers to a `collection` in our database. 
+
+- We must take into account that every time a user attempts to create a vehicle by sending a POST method to `api/vehicle/:companyId`, we need to validate it. If there is any error during validation, we need to return an error message; otherwise. For that reason a `middleware` was added into our src folder , `isValidVehicle.js` is file where all the requierd validation is taking place. See code bellow
+
+```
+const isValidBrand = (brand) => {
+  return Object.values(validVehicleFormat.vehicleBrand).includes(
+    toLowerCase(brand)
+  );
+};
+```
+
+-  `timestamps` property was not added to the vehicle schema. 
+
+
+```
+const vehicleSchema = new Schema({
+  brand: {
+    type: String,
+    required: true,
+  },
+  model: {
+    type: String,
+    required: true,
+  },
+  description : {
+    type : String,
+    require: false,
+  },
+  year: {
+    type: Number,
+    require: true,
+  },
+  width: {
+    type: Number,
+    require: true,
+  },
+  length: {
+    type: Number,
+    require: true,
+  },
+  color: {
+    type: String,
+    require: true,
+  },
+  plateNumber: {
+    type: String,
+    require: true,
+  },
+  companyId: {
+    type: Types.ObjectId,
+    ref: `${companyKey}`,
+    require: true,
+  },
+});
+```
+
+
 
 
