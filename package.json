@@ -39,7 +39,8 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "supertest": "^7.0.0"
   },
   "scripts": {
     "dev": "nodemon src/index.js",
