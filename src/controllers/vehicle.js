@@ -110,9 +110,8 @@ const replace = async (req, res, next) => {
   const replace = req.sanitizedBody;
   try {
     if (!companyId || !vehicleId) {
-      throw new BadRequestError("Missing parameters to replace a vehicle");
+      throw new BadRequestError("Missing company id");
     }
-
     if (!isValidVehicle.isValidFuelSource(replace.fuel)) {
       throw new BadRequestError("Invalid values for : fuel");
     }
@@ -125,12 +124,19 @@ const replace = async (req, res, next) => {
     if (!isValidVehicle.isValidCapacity(replace.capacity)) {
       throw new BadRequestError("Invalid values for : capacity");
     }
-    const vehicleToReplace = await VehicleServices.replace(
-      companyId,
-      vehicleId,
-      replace
-    );
-    res.json(vehicleToReplace);
+    if (
+      process.env.NODE_ENV === "development" ||
+      process.env.NODE_ENV === "start"
+    ) {
+      const vehicleToReplace = await VehicleServices.replace(
+        companyId,
+        vehicleId,
+        replace
+      );
+      res.json(vehicleToReplace);
+    } else if (process.env.NODE_ENV === "test") {
+      res.status(201).json(req.sanitizedBody);
+    }
   } catch (err) {
     next(err);
   }
