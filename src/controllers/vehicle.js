@@ -7,7 +7,10 @@ const getAll = async (req, res, next) => {
   try {
     const companyId = req.params.companyId;
     // check for env mode
-    if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "start") {
+    if (
+      process.env.NODE_ENV === "development" ||
+      process.env.NODE_ENV === "start"
+    ) {
       if (!companyId) {
         throw new BadRequestError("Missing company id");
       }
@@ -75,50 +78,84 @@ const create = async (req, res, next) => {
     }
 
     // check for env mode
-if (
-  process.env.NODE_ENV === "development" ||
-  process.env.NODE_ENV === "start"
-) {
-  const newVehicle = VehicleServices.create({
-    brand,
-    model,
-    year,
-    width,
-    length,
-    color,
-    description,
-    fuel,
-    plateNumber,
-    capacity,
-    companyId,
-  });
-  res.status(201).json(newVehicle);
-} else if (process.env.NODE_ENV === "test") {
-  res.status(201).json(req.sanitizedBody);
-}
+    if (
+      process.env.NODE_ENV === "development" ||
+      process.env.NODE_ENV === "start"
+    ) {
+      const newVehicle = VehicleServices.create({
+        brand,
+        model,
+        year,
+        width,
+        length,
+        color,
+        description,
+        fuel,
+        plateNumber,
+        capacity,
+        companyId,
+      });
+      res.status(201).json(newVehicle);
+    } else if (process.env.NODE_ENV === "test") {
+      res.status(201).json(req.sanitizedBody);
+    }
   } catch (err) {
     next(err);
   }
 };
 
-const replace = async(req, res, next) =>{
-
-}
-
-const update = async (req, res, next) =>{
-
-}
-
-const deleteOne = async(req, res, next)=>{
+const replace = async (req, res, next) => {
   const companyId = req.params.companyId;
   const vehicleId = req.params.vehicleId;
+  const replace = req.sanitizedBody;
   try {
-    const deletedVehicle = await VehicleServices.deleteOne( companyId, vehicleId)
-    res.json(deletedVehicle)
-  } catch(err){
-    next(err)
+    if (!companyId || !vehicleId) {
+      throw new BadRequestError("Missing parameters to replace a vehicle");
+    }
+
+    if (!isValidVehicle.isValidFuelSource(replace.fuel)) {
+      throw new BadRequestError("Invalid values for : fuel");
+    }
+    if (!isValidVehicle.isValidWidth(replace.width)) {
+      throw new BadRequestError("Invalid values for : width");
+    }
+    if (!isValidVehicle.isValidLength(replace.length)) {
+      throw new BadRequestError("Invalid values for : length");
+    }
+    if (!isValidVehicle.isValidCapacity(replace.capacity)) {
+      throw new BadRequestError("Invalid values for : capacity");
+    }
+    const vehicleToReplace = await VehicleServices.replace(
+      companyId,
+      vehicleId,
+      replace
+    );
+    res.json(vehicleToReplace);
+  } catch (err) {
+    next(err);
   }
-}
+};
+
+const update = async (req, res, next) => {};
+
+const deleteOne = async (req, res, next) => {
+  const companyId = req.params.companyId;
+  const vehicleId = req.params.vehicleId;
+
+  try {
+    if (!companyId || !vehicleId) {
+      throw new BadRequestError("Missing parameters to replace a vehicle");
+    }
+
+    const deletedVehicle = await VehicleServices.deleteOne(
+      companyId,
+      vehicleId
+    );
+    res.json(deletedVehicle);
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports = {
   getAll,
