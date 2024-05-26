@@ -10,9 +10,10 @@ const vehicleSchema = new Schema({
     type: String,
     required: true,
   },
-  description : {
-    type : String,
+  description: {
+    type: String,
     require: false,
+    default: "",
   },
   year: {
     type: Number,
@@ -33,6 +34,7 @@ const vehicleSchema = new Schema({
   plateNumber: {
     type: String,
     require: true,
+    unique: true,
   },
   companyId: {
     type: Types.ObjectId,

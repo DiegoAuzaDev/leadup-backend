@@ -44,7 +44,7 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development nodemon src/index.js",
-    "start": "node src/index.js",
+    "start": "NODE_ENV=start node src/index.js",
     "test": "jest"
   }
 }
