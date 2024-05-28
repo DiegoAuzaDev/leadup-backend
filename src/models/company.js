@@ -1,20 +1,6 @@
 const { model, Schema, Types } = require("mongoose");
 const { userKey, companyKey } = require("../utils/keys");
-
-const locationSchema = new Schema(
-  {
-    latitude: {
-      type: String,
-      required: true,
-    },
-    longitude: {
-      type: String,
-      required: true,
-    },
-  },
-  { _id: false }
-);
-
+const { locationSchema } = require("./location");
 const companySchema = new Schema(
   {
     name: {
@@ -59,12 +45,12 @@ const companySchema = new Schema(
 );
 
 companySchema.set("toObject", {
-    transform : (_doc, ret)=>{
-        return {
-          ...ret,
-          id: ret._id.toString(),
-        };
-    }
-})
+  transform: (_doc, ret) => {
+    return {
+      ...ret,
+      id: ret._id.toString(),
+    };
+  },
+});
 
 module.exports = model(`${companyKey}`, companySchema);

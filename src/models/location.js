@@ -1,29 +1,16 @@
-const { model, Schema, Types } = require("mongoose");
-const { employeeKey, locationKey } = require("../utils/keys.js");
-
+const { Schema } = require("mongoose");
 const locationSchema = new Schema(
   {
-    employee_id: {
-      type: Types.ObjectId,
-      ref: `${employeeKey}`,
-      require: true,
-    },
-    coordinates: {
+    latitude: {
       type: String,
-      enum: ["Point"],
-      require: true,
+      required: true,
+    },
+    longitude: {
+      type: String,
+      required: true,
     },
   },
-  { timestamps: true }
+  { _id: false }
 );
 
-locationSchema.set("toObject", {
-    transform : (_doc, ret) => {
-        return {
-          ...ret,
-          id: ret._id.toString(),
-        };
-    }
-})
-
-module.exports = model(`${locationKey}`, locationSchema)
+module.exports = { locationSchema };
