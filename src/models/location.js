@@ -1,5 +1,5 @@
 const { model, Schema, Types } = require("mongoose");
-const { employeeKey, locationKey } = require("../utils/keys");
+const { employeeKey, locationKey } = require("../utils/keys.js");
 
 const locationSchema = new Schema(
   {
