@@ -142,7 +142,43 @@ const replace = async (req, res, next) => {
   }
 };
 
-const update = async (req, res, next) => {};
+const update = async (req, res, next) => {
+  const companyId = req.params.companyId;
+  const vehicleId = req.params.vehicleId;
+  const replace = req.sanitizedBody;
+  try {
+    if (!companyId || !vehicleId) {
+      throw new BadRequestError("Missing company id");
+    }
+    if (!isValidVehicle.isValidFuelSource(replace.fuel)) {
+      throw new BadRequestError("Invalid values for : fuel");
+    }
+    if (!isValidVehicle.isValidWidth(replace.width)) {
+      throw new BadRequestError("Invalid values for : width");
+    }
+    if (!isValidVehicle.isValidLength(replace.length)) {
+      throw new BadRequestError("Invalid values for : length");
+    }
+    if (!isValidVehicle.isValidCapacity(replace.capacity)) {
+      throw new BadRequestError("Invalid values for : capacity");
+    }
+    if (
+      process.env.NODE_ENV === "development" ||
+      process.env.NODE_ENV === "start"
+    ) {
+      const vehicleToReplace = await VehicleServices.replace(
+        companyId,
+        vehicleId,
+        replace
+      );
+      res.json(vehicleToReplace);
+    } else if (process.env.NODE_ENV === "test") {
+      res.status(201).json(req.sanitizedBody);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 
 const deleteOne = async (req, res, next) => {
   const companyId = req.params.companyId;
