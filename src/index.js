@@ -27,7 +27,7 @@ const vehicleRouter = require("./routes/vehicle.js");
 // Creating Express app
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server)
+const io = socketIo(server);
 
 
 
@@ -90,4 +90,6 @@ mongoose
 // Starting the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+
+module.exports = {io}
 
