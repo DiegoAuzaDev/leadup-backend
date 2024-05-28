@@ -5,6 +5,10 @@ require("dotenv").config();
 const compression = require("compression");
 const cors = require("cors");
 const express = require("express");
+// require socket.io
+const socketIo = require("socket.io")
+// require HTTP
+const http = require("http")
 const helmet = require("helmet");
 const logMiddleware = require("./middleware/logMiddleware.js");
 const MongoStore = require("connect-mongo");
@@ -22,6 +26,10 @@ const vehicleRouter = require("./routes/vehicle.js");
 
 // Creating Express app
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server)
+
+
 
 // Middleware setup
 app.use(compression()); // Compression middleware for responses
