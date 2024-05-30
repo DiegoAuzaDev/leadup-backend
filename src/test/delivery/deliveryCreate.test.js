@@ -9,7 +9,7 @@ describe("create function for delivery", () => {
       params: {
         companyId: "123123123",
       },
-      sanitizedBody: [1, 1, 1, 1, 1, 1],
+      sanitizedBody: [true, true, true, true, true],
     };
     res = {
       status: jest.fn().mockReturnThis(),
@@ -28,12 +28,40 @@ describe("create function for delivery", () => {
     );
   });
 
-  it("should return 400 is there is no sanitizedBody ", async ()=>{
-    delete req.sanitizedBody
+  it("should return 400 is there is no sanitizedBody ", async () => {
+    delete req.sanitizedBody;
 
-    await create(req, res, next)
-       expect(next).toHaveBeenCalledWith(
-         new BadRequestError("Missing list of deliveries")
-       );
+    await create(req, res, next);
+    expect(next).toHaveBeenCalledWith(
+      new BadRequestError("Missing list of deliveries")
+    );
+  });
+
+  it("should return 201 if there is no invalid input", async () => {
+    await create(req, res, next);
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: "OK",
+        message: "Processing completed",
+        validIndex: expect.any(Array),
+        invalidIndex: expect.any(Array),
+      })
+    );
+  });
+
+  it("should return 200 if there is invalid input", async () => {
+    req.sanitizedBody[0] = false;
+    req.sanitizedBody[req.sanitizedBody.length - 1] = false;
+    await create(req, res, next);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: "OK",
+        message: "Processing completed with some errors.",
+        validIndex: expect.any(Array),
+        invalidIndex: expect.any(Array),
+      })
+    );
   });
 });
