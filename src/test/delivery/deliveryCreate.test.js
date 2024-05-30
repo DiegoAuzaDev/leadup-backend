@@ -19,7 +19,7 @@ describe("create function for delivery", () => {
     process.env.NODE_ENV = "test"; // Set the environment to test mode
   });
 
-  it("should return 400 is there is no company ID ", async () => {
+  it("should return 400 if there is no company ID ", async () => {
     delete req.params.companyId;
 
     await create(req, res, next);
@@ -28,7 +28,7 @@ describe("create function for delivery", () => {
     );
   });
 
-  it("should return 400 is there is no sanitizedBody ", async () => {
+  it("should return 400 if there is no sanitizedBody ", async () => {
     delete req.sanitizedBody;
 
     await create(req, res, next);
