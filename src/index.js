@@ -5,6 +5,10 @@ require("dotenv").config();
 const compression = require("compression");
 const cors = require("cors");
 const express = require("express");
+// require socket.io
+const socketIo = require("socket.io")
+// require HTTP
+const http = require("http")
 const helmet = require("helmet");
 const logMiddleware = require("./middleware/logMiddleware.js");
 const MongoStore = require("connect-mongo");
@@ -18,10 +22,15 @@ const authRouter = require("./routes/authRouter.js");
 const employeeRouter = require("./routes/employeeRouter.js");
 const userRouter = require("./routes/userRoutes.js");
 const vehicleRouter = require("./routes/vehicle.js");
+const deliveryRouter = require("./routes/delivery.js")
 
 
 // Creating Express app
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
+
+
 
 // Middleware setup
 app.use(compression()); // Compression middleware for responses
@@ -69,6 +78,8 @@ app.use("/api/employee", sanitizeBody, employeeRouter);
 
 app.use("/api/vehicle", sanitizeBody, vehicleRouter  )
 
+app.use("/api/delivery", sanitizeBody , deliveryRouter )
+
 // Connecting to MongoDB
 mongoose
   .connect(process.env.MONGO_URL)
@@ -81,5 +92,7 @@ mongoose
 
 // Starting the server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+server.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+
+module.exports = {io}
 
