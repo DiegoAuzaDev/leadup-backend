@@ -1,14 +1,10 @@
 const { model, Schema, Types } = require("mongoose");
-const {
-  employeeKey,
-  companyKey,
-  deliveryItemKey,
-} = require("../utils/keys.js");
+const { employeeKey, companyKey, customerKey } = require("../utils/keys.js");
 const { locationSchema } = require("./location.js");
 
 const paymentState = ["credit", "cash", "transfer"];
 
-const deliveryItemSchema = new Schema(
+const customerSchema = new Schema(
   {
     employee_id: {
       type: Types.ObjectId,
@@ -20,11 +16,11 @@ const deliveryItemSchema = new Schema(
       ref: `${companyKey}`,
       require: true,
     },
-    ownerName: {
-      Type: String,
+    name: {
+      type: String,
       require: true,
     },
-    owner_id: {
+    ownerId: {
       type: Number,
       require: true,
       unique: true,
@@ -36,15 +32,23 @@ const deliveryItemSchema = new Schema(
     paymentMethod: {
       type: String,
       enum: paymentState,
-      require : true
+      require: true,
     },
     debtAmount: {
       type: Number,
       default: 0,
-      require: true
+      require: true,
     },
     images: {
       type: [String],
+      require: true,
+    },
+    address: {
+      type: String,
+      require,
+    },
+    city: {
+      type: String,
       require: true,
     },
     location: locationSchema,
@@ -52,7 +56,7 @@ const deliveryItemSchema = new Schema(
   { timestamps: true }
 );
 
-deliveryItemSchema.set("toObject", {
+customerSchema.set("toObject", {
   transform: (_doc, ret) => {
     return {
       ...ret,
@@ -61,4 +65,4 @@ deliveryItemSchema.set("toObject", {
   },
 });
 
-module.exports = model(`${deliveryItemKey}`, deliveryItemSchema);
+module.exports = model(`${customerKey}`, customerSchema);

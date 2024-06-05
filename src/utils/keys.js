@@ -3,8 +3,7 @@ const companyKey = "Company";
 const employeeKey = "Employee"
 const vehicleKey = "Vehicle"
 const locationKey = "Location"
-const deliveryItemKey = "DeliveryItem"
-const deliveryListKey = "DeliveryList"
+const customerItemKey = "Customer"
 
 module.exports = {
   userKey,
@@ -12,6 +11,5 @@ module.exports = {
   employeeKey,
   vehicleKey,
   locationKey,
-  deliveryItemKey,
-  deliveryListKey
+  customerItemKey,
 };
