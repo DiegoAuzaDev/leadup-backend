@@ -22,7 +22,7 @@ const authRouter = require("./routes/authRouter.js");
 const employeeRouter = require("./routes/employeeRouter.js");
 const userRouter = require("./routes/userRoutes.js");
 const vehicleRouter = require("./routes/vehicle.js");
-const custumerRouter = require("./routes/customer.js")
+const customerRouter = require("./routes/customer.js")
 
 
 // Creating Express app
@@ -81,7 +81,7 @@ app.use("/api/employee", sanitizeBody, employeeRouter);
 
 app.use("/api/vehicle", sanitizeBody, vehicleRouter  )
 
-app.use("/api/customer", sanitizeBody, custumerRouter);
+app.use("/api/customer", sanitizeBody, customerRouter);
 
 // Connecting to MongoDB
 mongoose
