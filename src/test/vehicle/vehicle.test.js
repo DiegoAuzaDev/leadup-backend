@@ -4,16 +4,16 @@ const vehicleValidation = require("../../middleware/isValidVehicle");
 
 // invalid value - typo
 test("Testing vechicle validation for brand : MERCSDESx - FALSE", () => {
-  expect(vehicleValidation.isValidBrand("MercDESx")).toBe(false);
+  expect(vehicleValidation.isValidMake("MercDESx")).toBe(false);
 });
 
 test("Testing vechicle validation for brand : NewCarBrand - FALSE", () => {
-  expect(vehicleValidation.isValidBrand("NewCarBrand")).toBe(false);
+  expect(vehicleValidation.isValidMake("NewCarBrand")).toBe(false);
 });
 
 // valid value and checking for string formated
 test("Testing vechicle validation for brand : MerceDes - TRUE", () => {
-  expect(vehicleValidation.isValidBrand("MerceDes")).toBe(true);
+  expect(vehicleValidation.isValidMake("MerceDes")).toBe(true);
 });
 
 // testing vehicle color

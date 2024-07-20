@@ -4,7 +4,7 @@ const { BadRequestError } = require("../../utils/errors");
 
 // Mock isValidVehicle module
 jest.mock("../../middleware/isValidVehicle", () => ({
-  isValidBrand: jest.fn(),
+  isValidMake: jest.fn(),
   isValidColor: jest.fn(),
   isValidFuelSource: jest.fn(),
   isValidWidth: jest.fn(),
@@ -21,7 +21,7 @@ describe("create function for vehicle", () => {
     req = {
       params: { companyId: "123" },
       sanitizedBody: {
-        brand: "Toyota",
+        make: "Toyota",
         model: "Corolla",
         year: 2020,
         width: 70,
@@ -51,8 +51,8 @@ describe("create function for vehicle", () => {
     );
   });
 
-  it("should return 400 if brand is invalid", async () => {
-    isValidVehicle.isValidBrand.mockReturnValue(false);
+  it("should return 400 if make is invalid", async () => {
+    isValidVehicle.isValidMake.mockReturnValue(false);
 
     await create(req, res, next);
 
@@ -64,7 +64,7 @@ describe("create function for vehicle", () => {
 
 
   it("should return 201 with sanitized body if all validations pass", async () => {
-    isValidVehicle.isValidBrand.mockReturnValue(true);
+    isValidVehicle.isValidMake.mockReturnValue(true);
     isValidVehicle.isValidColor.mockReturnValue(true);
     isValidVehicle.isValidFuelSource.mockReturnValue(true);
     isValidVehicle.isValidWidth.mockReturnValue(true);

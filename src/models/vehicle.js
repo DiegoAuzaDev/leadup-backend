@@ -2,7 +2,7 @@ const { model, Schema, Types } = require("mongoose");
 const { companyKey, vehicleKey } = require("../utils/keys.js");
 
 const vehicleSchema = new Schema({
-  brand: {
+  make: {
     type: String,
     required: true,
   },

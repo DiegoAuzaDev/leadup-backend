@@ -7,7 +7,7 @@ const isNumber = (test) => {
   return typeof test === "number" && !isNaN(test);
 };
 
-const isValidBrand = (brand) => {
+const isValidMake = (brand) => {
   return Object.values(validVehicleFormat.vehicleBrand).includes(
     toLowerCase(brand)
   );
@@ -63,7 +63,7 @@ const isValidCapacity = (capacity) => {
 
 
 module.exports = {
-  isValidBrand,
+  isValidMake,
   isValidColor,
   isValidFuelSource,
   isValidWidth,

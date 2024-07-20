@@ -42,7 +42,7 @@ const create = async (req, res, next) => {
   try {
     const companyId = req.params.companyId;
     const {
-      brand,
+      make,
       model,
       year,
       width,
@@ -56,7 +56,7 @@ const create = async (req, res, next) => {
     if (!companyId) {
       throw new BadRequestError("Missing company id");
     }
-    if (!isValidVehicle.isValidBrand(brand)) {
+    if (!isValidVehicle.isValidMake(make)) {
       throw new BadRequestError("Invalid values for : brand");
     }
 
@@ -83,7 +83,7 @@ const create = async (req, res, next) => {
       process.env.NODE_ENV === "start"
     ) {
       const newVehicle = VehicleServices.create({
-        brand,
+        make,
         model,
         year,
         width,
