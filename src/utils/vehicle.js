@@ -29,7 +29,7 @@ const vehicleSpecs = {
     },
     length: {
       maxLength: 12, // meters
-      minLength: 5, // meters
+      minLength: 3, // meters
     },
     capacity: {
       maxCapacity: 40, // tons
